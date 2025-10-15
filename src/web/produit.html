@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Découvrir un module ou script en détail sur Letsdoo." />
+    <meta name="csrf-token" content="" />
+    <title>Fiche produit · Letsdoo</title>
+    <link rel="stylesheet" href="styles/main.css" />
+    <script type="module" src="js/app.js" defer></script>
+    <script type="module" src="js/produit.js" defer></script>
+  </head>
+  <body class="page-produit">
+    <header id="site-header"></header>
+    <main>
+      <article class="product" id="product-detail">
+        <div class="product__header">
+          <img id="product-cover" class="product__cover" alt="Visuel du produit" loading="lazy" />
+          <div>
+            <h1 id="product-title">Chargement…</h1>
+            <p id="product-subtitle" class="subtitle"></p>
+            <div class="product__meta">
+              <span id="product-rating" class="rating">★ ★ ★ ★ ★</span>
+              <span id="product-price" class="price"></span>
+            </div>
+            <div class="actions">
+              <button class="btn btn-primary" id="buy-btn">Acheter maintenant</button>
+              <button class="btn btn-secondary" id="download-btn" hidden>Télécharger</button>
+            </div>
+          </div>
+        </div>
+        <nav class="product__nav">
+          <a href="#apercu">Aperçu</a>
+          <a href="#compatibilite">Compatibilité</a>
+          <a href="#installation">Installation</a>
+          <a href="#versions">Mises à jour</a>
+          <a href="#avis">Avis</a>
+        </nav>
+        <section id="apercu" class="product__section">
+          <h2>Aperçu</h2>
+          <div id="product-description" class="markdown"></div>
+        </section>
+        <section id="compatibilite" class="product__section">
+          <h2>Compatibilité</h2>
+          <ul id="product-compat"></ul>
+        </section>
+        <section id="installation" class="product__section">
+          <h2>Installation &amp; Licence</h2>
+          <p>Les instructions détaillées sont fournies dans l’archive téléchargée. Licence au choix du créateur.</p>
+        </section>
+        <section id="versions" class="product__section">
+          <h2>Mises à jour</h2>
+          <ul id="product-versions" class="timeline"></ul>
+        </section>
+        <section id="avis" class="product__section">
+          <h2>Avis clients</h2>
+          <div id="reviews-list" class="reviews"></div>
+          <form id="review-form" class="card card--border">
+            <h3>Partager votre expérience</h3>
+            <label for="review-rating">Note /5</label>
+            <input type="number" id="review-rating" name="rating" min="1" max="5" required />
+            <label for="review-comment">Commentaire</label>
+            <textarea id="review-comment" name="comment" rows="4" placeholder="Expliquez comment le module vous aide"></textarea>
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+          </form>
+        </section>
+      </article>
+      <aside class="sidebar" id="author-block"></aside>
+    </main>
+    <footer id="site-footer"></footer>
+  </body>
+</html>

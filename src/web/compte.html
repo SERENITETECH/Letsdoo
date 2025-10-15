@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Espace client Letsdoo : achats, téléchargements et favoris." />
+    <meta name="csrf-token" content="" />
+    <title>Mon compte · Letsdoo</title>
+    <link rel="stylesheet" href="styles/main.css" />
+    <script type="module" src="js/app.js" defer></script>
+    <script type="module" src="js/compte.js" defer></script>
+  </head>
+  <body class="page-compte">
+    <header id="site-header"></header>
+    <main class="dashboard">
+      <section class="dashboard__header">
+        <h1>Bonjour <span id="account-name">!</span></h1>
+        <p>Retrouvez vos achats, téléchargements et favoris.</p>
+      </section>
+      <nav class="tabs" id="account-tabs" aria-label="Navigation compte">
+        <button class="tab active" data-target="achats">Achats</button>
+        <button class="tab" data-target="telechargements">Téléchargements</button>
+        <button class="tab" data-target="favoris">Favoris</button>
+        <button class="tab" data-target="support">Support</button>
+      </nav>
+      <section class="tab-panel active" id="achats"></section>
+      <section class="tab-panel" id="telechargements"></section>
+      <section class="tab-panel" id="favoris"></section>
+      <section class="tab-panel" id="support">
+        <div class="card card--border">
+          <h2>Tickets &amp; assistance</h2>
+          <p>Support prioritaire pour vos modules achetés. Les conversations seront bientôt disponibles.</p>
+        </div>
+      </section>
+    </main>
+    <footer id="site-footer"></footer>
+  </body>
+</html>
