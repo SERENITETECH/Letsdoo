@@ -71,7 +71,7 @@ export async function listProducts(filters: ProductFilter) {
   return { items, total, page: filters.page ?? 1, pageSize: filters.pageSize ?? 20 };
 }
 
-export async function getProductById(id: string) {
+export async function getProductById(id: string, requester?: { id: string; role: Role } | null) {
   const product = await prisma.product.findFirst({
     where: { OR: [{ id }, { slug: id }] },
     include: {
@@ -85,6 +85,11 @@ export async function getProductById(id: string) {
     },
   });
   if (!product) throw new HttpError(404, 'PRODUCT_NOT_FOUND', 'Produit introuvable');
+  const isOwner = requester && product.authorId === requester.id;
+  const isAdmin = requester?.role === Role.ADMIN;
+  if (product.status !== ProductStatus.PUBLISHED && !isOwner && !isAdmin) {
+    throw new HttpError(404, 'PRODUCT_NOT_FOUND', 'Produit introuvable');
+  }
   return product;
 }
 

@@ -16,12 +16,12 @@ versionsRouter.post('/:productId', csrfProtection, async (req, res) => {
   const user = requireRole(req.session, [Role.CREATOR, Role.ADMIN]);
   const { number, changelogMD, zipUrl } = req.body;
   if (!number || !zipUrl) throw badRequest('Version invalide');
-  const version = await createVersion(req.params.productId, { number, changelogMD, zipUrl });
+  const version = await createVersion(req.params.productId, { number, changelogMD, zipUrl }, user);
   res.status(201).json({ version, user });
 });
 
 versionsRouter.delete('/:id', csrfProtection, async (req, res) => {
-  requireRole(req.session, [Role.CREATOR, Role.ADMIN]);
-  await deleteVersion(req.params.id);
+  const user = requireRole(req.session, [Role.CREATOR, Role.ADMIN]);
+  await deleteVersion(req.params.id, user);
   res.status(204).end();
 });

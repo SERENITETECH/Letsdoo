@@ -19,7 +19,7 @@ export async function listProductsHandler(req: Request, res: Response) {
 }
 
 export async function getProductHandler(req: Request, res: Response) {
-  const product = await getProductById(req.params.id);
+  const product = await getProductById(req.params.id, req.session.user);
   res.json({ product });
 }
 
