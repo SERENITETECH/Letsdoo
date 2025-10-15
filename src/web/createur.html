@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Espace créateur Letsdoo : pilotez vos ventes et publiez vos modules." />
+    <meta name="csrf-token" content="" />
+    <title>Espace créateur · Letsdoo</title>
+    <link rel="stylesheet" href="styles/main.css" />
+    <script type="module" src="js/app.js" defer></script>
+    <script type="module" src="js/createur.js" defer></script>
+  </head>
+  <body class="page-createur">
+    <header id="site-header"></header>
+    <main class="creator">
+      <section class="creator__kpi" id="creator-kpis">
+        <div class="kpi">
+          <span class="kpi__value" data-kpi="revenus">0 €</span>
+          <span class="kpi__label">Revenus 30j</span>
+        </div>
+        <div class="kpi">
+          <span class="kpi__value" data-kpi="ventes">0</span>
+          <span class="kpi__label">Ventes 30j</span>
+        </div>
+        <div class="kpi">
+          <span class="kpi__value" data-kpi="panier">0 €</span>
+          <span class="kpi__label">Panier moyen</span>
+        </div>
+      </section>
+
+      <section class="creator__table">
+        <h2>Mes modules</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Titre</th>
+              <th>Statut</th>
+              <th>Prix</th>
+              <th>Mises à jour</th>
+            </tr>
+          </thead>
+          <tbody id="creator-products"></tbody>
+        </table>
+      </section>
+
+      <section class="creator__form" aria-label="Publier un nouveau module">
+        <h2>Publier un module</h2>
+        <form id="creator-form" class="card card--border">
+          <label for="product-title">Titre</label>
+          <input id="product-title" name="title" required />
+          <label for="product-type">Type</label>
+          <select id="product-type" name="type">
+            <option value="MODULE">Module</option>
+            <option value="TEMPLATE">Template</option>
+            <option value="SCRIPT">Script Python</option>
+          </select>
+          <fieldset>
+            <legend>Compatibilités</legend>
+            <label><input type="checkbox" name="compatibility" value="Odoo 17" /> Odoo 17</label>
+            <label><input type="checkbox" name="compatibility" value="Odoo 18" /> Odoo 18</label>
+            <label><input type="checkbox" name="compatibility" value="Make.com" /> Make.com</label>
+            <label><input type="checkbox" name="compatibility" value="SaaS" /> SaaS</label>
+          </fieldset>
+          <label for="product-price">Prix (€)</label>
+          <input type="number" id="product-price" name="price" min="0" step="1" />
+          <label for="product-tags">Tags (séparés par des virgules)</label>
+          <input id="product-tags" name="tags" placeholder="odoo, finance" />
+          <label for="product-description">Description Markdown</label>
+          <textarea id="product-description" name="description" rows="6"></textarea>
+          <label for="product-cover">Image de couverture</label>
+          <input type="file" id="product-cover" name="cover" accept="image/*" />
+          <label for="product-zip">Archive ZIP</label>
+          <input type="file" id="product-zip" name="archive" accept="application/zip" />
+          <label for="product-changelog">Changelog initial</label>
+          <textarea id="product-changelog" name="changelog" rows="4"></textarea>
+          <button type="submit" class="btn btn-primary">Publier</button>
+        </form>
+      </section>
+    </main>
+    <footer id="site-footer"></footer>
+  </body>
+</html>
