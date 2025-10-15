@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Parcourez les modules, templates et scripts Python disponibles sur Letsdoo." />
+    <meta name="csrf-token" content="" />
+    <title>Marketplace · Letsdoo</title>
+    <link rel="stylesheet" href="styles/main.css" />
+    <script type="module" src="js/app.js" defer></script>
+    <script type="module" src="js/marketplace.js" defer></script>
+  </head>
+  <body class="page-marketplace">
+    <header id="site-header"></header>
+    <main class="layout">
+      <aside class="filters" aria-label="Filtres marketplace">
+        <form id="filters-form">
+          <div class="filter-group">
+            <label for="search">Recherche</label>
+            <input type="search" id="search" name="q" placeholder="Rechercher un module" />
+          </div>
+          <div class="filter-group">
+            <span class="label">Type</span>
+            <label><input type="radio" name="type" value="" checked /> Tous</label>
+            <label><input type="radio" name="type" value="MODULE" /> Modules</label>
+            <label><input type="radio" name="type" value="TEMPLATE" /> Templates</label>
+            <label><input type="radio" name="type" value="SCRIPT" /> Scripts Python</label>
+          </div>
+          <div class="filter-group">
+            <span class="label">Compatibilité</span>
+            <label><input type="checkbox" name="compat" value="Odoo 17" /> Odoo 17</label>
+            <label><input type="checkbox" name="compat" value="Odoo 18" /> Odoo 18</label>
+            <label><input type="checkbox" name="compat" value="Make.com" /> Make.com</label>
+            <label><input type="checkbox" name="compat" value="SaaS" /> SaaS</label>
+          </div>
+          <div class="filter-group">
+            <span class="label">Prix</span>
+            <div class="range">
+              <input type="number" name="minPrice" placeholder="Min €" min="0" />
+              <input type="number" name="maxPrice" placeholder="Max €" min="0" />
+            </div>
+          </div>
+          <div class="filter-group">
+            <label for="sort">Tri</label>
+            <select name="sort" id="sort">
+              <option value="recent">Plus récents</option>
+              <option value="popular">Populaires</option>
+              <option value="price-asc">Prix croissant</option>
+              <option value="price-desc">Prix décroissant</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Appliquer</button>
+        </form>
+      </aside>
+      <section class="results" aria-live="polite">
+        <div class="results__state" id="results-state">Chargement des modules…</div>
+        <div class="grid" id="results-grid"></div>
+        <button class="btn btn-secondary" id="load-more" hidden>Charger plus</button>
+      </section>
+    </main>
+    <footer id="site-footer"></footer>
+  </body>
+</html>

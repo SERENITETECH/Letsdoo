@@ -1,0 +1,138 @@
+/// Schéma Prisma pour Letsdoo
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = env("DATABASE_PROVIDER", "postgresql")
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CLIENT
+  CREATOR
+  ADMIN
+}
+
+enum ProductType {
+  MODULE
+  TEMPLATE
+  SCRIPT
+}
+
+enum ProductStatus {
+  DRAFT
+  REVIEW
+  PUBLISHED
+}
+
+enum OrderStatus {
+  PAID
+  REFUND
+  FAILED
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  displayName  String
+  role         Role      @default(CLIENT)
+  createdAt    DateTime  @default(now())
+  products     Product[] @relation("ProductAuthor")
+  reviews      Review[]
+  orders       Order[]   @relation("OrderBuyer")
+  favorites    Favorite[]
+}
+
+model Product {
+  id              String           @id @default(cuid())
+  slug            String           @unique
+  type            ProductType
+  title           String
+  subtitle        String?
+  descriptionMD   String
+  priceCents      Int              @default(0)
+  compatibility   Json
+  tags            String[]
+  authorId        String
+  author          User             @relation("ProductAuthor", fields: [authorId], references: [id])
+  coverUrl        String?
+  status          ProductStatus    @default(DRAFT)
+  versions        Version[]
+  reviews         Review[]
+  categories      ProductCategory[]
+  favorites       Favorite[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  orderItems      OrderItem[]
+}
+
+model Version {
+  id          String   @id @default(cuid())
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id])
+  number      String
+  changelogMD String
+  zipUrl      String
+  createdAt   DateTime @default(now())
+}
+
+model Category {
+  id       String            @id @default(cuid())
+  name     String
+  slug     String            @unique
+  products ProductCategory[]
+}
+
+model ProductCategory {
+  productId  String
+  categoryId String
+  product    Product  @relation(fields: [productId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@id([productId, categoryId])
+}
+
+model Order {
+  id          String      @id @default(cuid())
+  buyerId     String
+  buyer       User        @relation("OrderBuyer", fields: [buyerId], references: [id])
+  totalCents  Int
+  currency    String      @default("EUR")
+  status      OrderStatus @default(PAID)
+  createdAt   DateTime    @default(now())
+  items       OrderItem[]
+}
+
+model OrderItem {
+  id             String  @id @default(cuid())
+  orderId        String
+  productId      String
+  unitPriceCents Int
+  qty            Int      @default(1)
+  order          Order   @relation(fields: [orderId], references: [id])
+  product        Product @relation(fields: [productId], references: [id])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  productId String
+  userId    String
+  rating    Int
+  comment   String
+  createdAt DateTime @default(now())
+  product   Product  @relation(fields: [productId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([productId, userId])
+}
+
+model Favorite {
+  userId    String
+  productId String
+  user      User    @relation(fields: [userId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@id([userId, productId])
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Administration Letsdoo : statistiques, produits, catégories et utilisateurs." />
+    <meta name="csrf-token" content="" />
+    <title>Administration · Letsdoo</title>
+    <link rel="stylesheet" href="styles/main.css" />
+    <script type="module" src="js/app.js" defer></script>
+    <script type="module" src="js/admin.js" defer></script>
+  </head>
+  <body class="page-admin">
+    <header id="site-header"></header>
+    <main class="admin">
+      <aside class="admin__sidebar">
+        <nav>
+          <button class="admin__link active" data-target="dashboard">Tableau de bord</button>
+          <button class="admin__link" data-target="produits">Produits</button>
+          <button class="admin__link" data-target="categories">Catégories</button>
+          <button class="admin__link" data-target="utilisateurs">Utilisateurs</button>
+          <button class="admin__link" data-target="commandes">Commandes</button>
+        </nav>
+      </aside>
+      <section class="admin__content">
+        <div class="panel active" id="dashboard">
+          <h1>Vue d’ensemble</h1>
+          <div class="kpi-grid" id="admin-stats"></div>
+        </div>
+        <div class="panel" id="produits">
+          <header class="panel__header">
+            <h2>Produits</h2>
+            <input type="search" id="admin-products-search" placeholder="Rechercher un produit" />
+          </header>
+          <table class="table" id="admin-products-table"></table>
+        </div>
+        <div class="panel" id="categories">
+          <header class="panel__header">
+            <h2>Catégories</h2>
+            <button class="btn btn-secondary" id="add-category">Nouvelle catégorie</button>
+          </header>
+          <table class="table" id="admin-categories-table"></table>
+        </div>
+        <div class="panel" id="utilisateurs">
+          <header class="panel__header">
+            <h2>Utilisateurs</h2>
+          </header>
+          <table class="table" id="admin-users-table"></table>
+        </div>
+        <div class="panel" id="commandes">
+          <header class="panel__header">
+            <h2>Commandes</h2>
+          </header>
+          <table class="table" id="admin-orders-table"></table>
+        </div>
+      </section>
+    </main>
+    <footer id="site-footer"></footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <dialog id="modal" class="modal"></dialog>
+  </body>
+</html>
