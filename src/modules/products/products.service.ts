@@ -72,8 +72,21 @@ export async function listProducts(filters: ProductFilter) {
 }
 
 export async function getProductById(id: string, requester?: { id: string; role: Role } | null) {
-  const product = await prisma.product.findFirst({
-    where: { OR: [{ id }, { slug: id }] },
+  const identifierWhere = { OR: [{ id }, { slug: id }] };
+  const productMetadata = await prisma.product.findFirst({
+    where: identifierWhere,
+    select: { id: true, authorId: true, status: true },
+  });
+  if (!productMetadata) {
+    throw new HttpError(404, 'PRODUCT_NOT_FOUND', 'Produit introuvable');
+  }
+  const isOwner = requester && productMetadata.authorId === requester.id;
+  const isAdmin = requester?.role === Role.ADMIN;
+  if (productMetadata.status !== ProductStatus.PUBLISHED && !isOwner && !isAdmin) {
+    throw new HttpError(404, 'PRODUCT_NOT_FOUND', 'Produit introuvable');
+  }
+  return prisma.product.findUnique({
+    where: { id: productMetadata.id },
     include: {
       author: { select: { id: true, displayName: true } },
       versions: { orderBy: { createdAt: 'desc' } },
@@ -84,13 +97,6 @@ export async function getProductById(id: string, requester?: { id: string; role:
       categories: { include: { category: true } },
     },
   });
-  if (!product) throw new HttpError(404, 'PRODUCT_NOT_FOUND', 'Produit introuvable');
-  const isOwner = requester && product.authorId === requester.id;
-  const isAdmin = requester?.role === Role.ADMIN;
-  if (product.status !== ProductStatus.PUBLISHED && !isOwner && !isAdmin) {
-    throw new HttpError(404, 'PRODUCT_NOT_FOUND', 'Produit introuvable');
-  }
-  return product;
 }
 
 export async function createProduct(data: any, user: { id: string; role: Role }) {
